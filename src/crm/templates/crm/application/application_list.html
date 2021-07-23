@@ -1,0 +1,21 @@
+{% extends "../base/base.html" %}
+{% load ru_pluralize %}
+{% block content %}
+<section>
+  <h1 class="h1 text-center mx-auto mt-4 pt-5" style="font-size: 70px;"><strong>{{ applications_title }}</strong></h1>
+  <p class="text-center pt-1">{{ vacancies|length|ru_pluralize:'заявка, заявки, заявок' }}</p>
+  <div class="row mt-5">
+    <div class="col-12 col-lg-8 offset-lg-2 m-auto">
+{#      {% load i18n %}#}
+{#        {% language 'ru' %}#}
+{#          {% for vacancy in vacancies %}#}
+{#            {% include './vacancy_card.html' %}#}
+{#          {% endfor %}#}
+{#        {% endlanguage %}#}
+        {% include './application_card.html' %}
+        {% include './application_card.html' %}
+        {% include './application_card.html' %}
+    </div>
+  </div>
+</section>
+{% endblock content %}
