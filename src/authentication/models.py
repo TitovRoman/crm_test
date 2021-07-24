@@ -3,5 +3,5 @@ from django.db import models
 
 
 class User(AbstractUser):
-    is_administrator = models.BooleanField()
-    is_employee = models.BooleanField()
+    is_administrator = models.BooleanField(default=False)
+    is_employee = models.BooleanField(default=False)

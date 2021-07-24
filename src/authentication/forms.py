@@ -1,8 +1,9 @@
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout
+from django.conf import settings
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.contrib.auth.models import User
 from django.urls import reverse
+from . import models
 
 
 class MyAuthenticationForm(AuthenticationForm):
@@ -22,7 +23,7 @@ class MyAuthenticationForm(AuthenticationForm):
 
 class MyUserCreationForm(UserCreationForm):
     class Meta:
-        model = User
+        model = models.User
         fields = ("username", "first_name", "last_name", "password1", "password2")
         labels = {
             'username': 'Логин',
