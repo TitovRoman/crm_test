@@ -39,4 +39,10 @@ class MyUserCreationForm(UserCreationForm):
         self.fields['password1'].label = 'Пароль'
         self.fields['password2'].label = 'Повторите пароль'
 
-        self.helper.add_input(Submit('submit', 'Зарегистрироваться', css_class='btn btn-primary btn-lg btn-block'))
+        self.helper.add_input(
+            Submit(
+                'submit',
+                'Зарегистрироваться',
+                css_class='btn btn-primary btn-lg btn-block'
+                )
+        )
