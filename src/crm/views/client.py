@@ -1,3 +1,4 @@
+from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse
 from django.views.generic import ListView, CreateView, \
     UpdateView
@@ -6,7 +7,7 @@ from crm import forms
 from crm import models
 
 
-class ClientCreateView(CreateView):
+class ClientBaseEditorView(SuccessMessageMixin):
     model = models.Client
     template_name = 'crm/client/client_create.html'
     form_class = forms.ClientForm
@@ -14,6 +15,11 @@ class ClientCreateView(CreateView):
 
     def get_success_url(self):
         return reverse('client_edit', kwargs={'pk': self.object.id})
+
+
+class ClientCreateView(ClientBaseEditorView, CreateView):
+    success_message = "Клиент создан"
+    form_class = forms.ClientCreateForm
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -23,11 +29,9 @@ class ClientCreateView(CreateView):
         return context
 
 
-class ClientEditView(UpdateView):
-    model = models.Client
-    template_name = 'crm/client/client_create.html'
-    form_class = forms.ClientForm
-    redirect_url = 'application_create'
+class ClientEditView(ClientBaseEditorView, UpdateView):
+    success_message = "Информация о клиенте обнавлена"
+    form_class = forms.ClientEditForm
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)

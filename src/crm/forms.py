@@ -58,6 +58,8 @@ class SearchForm(forms.Form):
 
 
 class ClientForm(forms.ModelForm):
+    button_message = 'Отправить'
+
     class Meta:
         model = models.Client
         fields = [
@@ -85,8 +87,24 @@ class ClientForm(forms.ModelForm):
                 Column('tg_username', css_class='col-12 col-md-6 col-lg-4'),
             ),
 
-            Submit('submit', 'Создать'),
+            Submit('submit', self.button_message),
         )
+
+
+class ClientCreateForm(ClientForm):
+    button_message = 'Создать'
+
+    def __init__(self, *argc, **kwargs):
+        super().__init__(*argc, **kwargs)
+
+
+class ClientEditForm(ClientForm):
+    button_message = 'Исправить'
+
+    def __init__(self, *argc, **kwargs):
+        super().__init__(*argc, **kwargs)
+
+
 
 class ApplicationForm(forms.ModelForm):
     class Meta:

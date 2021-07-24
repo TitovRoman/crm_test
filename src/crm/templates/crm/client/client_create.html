@@ -3,7 +3,12 @@
 {% load crispy_forms_tags %}
 {% block content %}
 <section class="row pt-2">
-    <h1 class="h1 text-center mx-auto mt-4">{{ title }}</h1>
+    <h1 class="h1 text-center mt-4 col-12">{{ title }}</h1>
+    {% if messages %}
+        <div class="alert alert-success col-12" role="alert">
+         {% for message in messages %}{{ message }}{% endfor %}
+        </div>
+    {% endif %}
     <div class="col-12 mt-4">
         {% crispy form %}
     </div>
