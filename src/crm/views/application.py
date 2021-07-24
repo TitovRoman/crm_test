@@ -1,6 +1,9 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
+from django.views import View
 from django.views.generic import ListView, CreateView, \
     DetailView, UpdateView, TemplateView
 
@@ -67,18 +70,36 @@ class ApplicationBaseEditorView(SuccessMessageMixin):
         return reverse('application', kwargs={'pk': self.object.id})
 
 
-class ApplicationView(AdministratorOrModelEmployeeMixin, DetailView):
+class ApplicationView(AdministratorOrModelEmployeeMixin, View):
     model = models.Application
     context_object_name = 'application'
     template_name = 'crm/application/application.html'
     redirect_url = 'home'
 
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
+    def get(self, request, *args, **kwargs):
+        application = get_object_or_404(self.model, id=kwargs['pk'])
+        context = {
+            'application': application
+        }
 
-        context['change_status_form'] = forms.ChangeStatusForm({'new_status': self.object.status.id})
+        if 'new_status' not in request.GET:
+            status_form = forms.ChangeStatusForm({
+                'new_status': application.status.id
+            })
+        else:
+            status_form = forms.ChangeStatusForm(request.GET)
 
-        return context
+        if status_form.is_valid():
+            current_status = application.status
+            status_from_form = status_form.cleaned_data['new_status']
+            if current_status != status_from_form:
+                messages.success(self.request, 'Статус обнавлен')
+                application.status = status_from_form
+                application.save()
+
+        context['change_status_form'] = status_form
+
+        return render(request, self.template_name, context=context)
 
 
 class ApplicationCreateView(

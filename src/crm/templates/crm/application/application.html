@@ -3,6 +3,11 @@
 {% block content %}
 <section class="row pt-2">
   <div class="col-12 col-lg-12">
+      {% if messages %}
+            <div class="alert alert-success col-12" role="alert">
+             {% for message in messages %}{{ message }}{% endfor %}
+            </div>
+      {% endif %}
       <h1 class="h1 text-center mx-auto mt-4"><strong>{{ application.title }}</strong></h1>
       <p>{{ application.description }}</p>
       <p class="mb-2">Клиент: {{ application.client.first_name }} {{ application.client.last_name }}</p>
