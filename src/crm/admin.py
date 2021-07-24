@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Application, Client, Status, Category
+
+admin.site.register(Application)
+admin.site.register(Client)
+admin.site.register(Status)
+admin.site.register(Category)
