@@ -5,12 +5,23 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-{#        <ul class="navbar-nav col-10">#}
-{#          <li class="nav-item">#}
-{#            <a class="nav-link" href="{% url 'all_vacancies' %}">Вакансии</a>#}
-{#          </li>#}
-{##}
-{#        </ul>#}
+        <ul class="navbar-nav col-10">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'home' %}">Ваши заявки</a>
+          </li>
+          {% if user.is_administrator %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'home' %}">Все заявки</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'home' %}">Создать клиента</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'home' %}">Создать заявку</a>
+              </li>
+          {% endif %}
+
+        </ul>
 
         <ul class="navbar-nav col-2 justify-content-end">
           {% if user.is_authenticated %}

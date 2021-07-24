@@ -1,13 +1,9 @@
 {% extends "../base/base.html" %}
 {% load ru_pluralize %}
-{% load crispy_forms_tags %}
 {% block content %}
-<section class="row pt-2">
-<div class="col-4 mt-4">
-    {% crispy search_form %}
-</div>
-  <div class="col-12 col-lg-8">
-      <h1 class="h1 text-center mx-auto mt-4"><strong>{{ applications_title }}</strong></h1>
+<section class="row">
+  <div class="col-12 col-lg-8 offset-lg-2 m-auto">
+      <h1 class="h1 text-center mx-auto mt-4 pt-5"><strong>{{ applications_title }}</strong></h1>
       <p class="text-center pt-1">{{ applications|length|ru_pluralize:'заявка, заявки, заявок' }}</p>
       <div class="row mt-5">
           {% load i18n %}

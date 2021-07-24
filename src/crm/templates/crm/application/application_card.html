@@ -1,14 +1,15 @@
-<div class="card mb-4">
+<div class="card col-12 mb-4">
     <div class="card-body px-4">
       <div class="row">
         <div class="col-12">
-          <a href=""><h2 class="h2 pb-2">Ремонт ноутбука</h2></a>
-          <p class="mb-2">Категория: ремонт</p>
-          <p class="mb-2">Ответственный сотрудник: Иван Иванов</p>
-          <p class="mb-2">Статус: выполняется</p>
+          <a href=""><h2 class="h3 pb-2">{{ application.title }}</h2></a>
+          <p class="mb-2">Клиент: {{ application.client.first_name }} {{ application.client.last_name }}</p>
+          <p class="mb-2">Категория: {{ application.category.title }}</p>
+          <p class="mb-2">Ответственный сотрудник: {{ application.employee.first_name }} {{ application.employee.last_name }}</p>
+          <p class="mb-2">Статус: {{ application.status.title }}</p>
 
-          <p>ываываы ываываыва ыыфваываыва ываыф вф ыаыфва ыа ыафы фыва фывафы вафыва ыывавыаы ываыаы выаываыв ываываываа ываывавы ы вавыаыв</p>
-          <p class="text-muted pt-1">12 января</p>
+          <p>{{ application.description|truncatewords:20 }}</p>
+          <p class="text-muted pt-1">{{ application.creation_date|date:'d E' }}</p>
         </div>
       </div>
     </div>
