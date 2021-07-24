@@ -18,7 +18,7 @@ from django.contrib.auth.views import LogoutView
 from django.urls import path
 
 from authentication.views import MyRegisterView, MyLoginView
-from crm.views import BaseView
+from crm.views import EmployeeApplicationsView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,5 +27,5 @@ urlpatterns = [
     path('register/', MyRegisterView.as_view(), name='register'),
     path('logout/', LogoutView.as_view(), name='logout'),
 
-    path('', BaseView.as_view(), name='home')
+    path('', EmployeeApplicationsView.as_view(), name='home')
 ]
