@@ -1,0 +1,17 @@
+<div class="card col-12 mb-4">
+    <div class="card-body px-4">
+      <div class="row">
+        <div class="col-12">
+          <a href="{% url 'client_edit' client.id %}"><h3 class="h3 pb-2">{{ client.first_name }} {{ client.last_name }}</h3></a>
+          <h4 class="mb-2">Контактные данные:</h4>
+          <p class="mb-2">Почта: {{ client.email }}</p>
+          {% if client.phone_number %}
+            <p class="mb-2">Телефон: {{ client.phone_number }}</p>
+          {% endif %}
+          {% if client.tg_username %}
+            <p class="mb-2">telegram: {{ client.tg_username }}</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+</div>

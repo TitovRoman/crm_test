@@ -1,0 +1,28 @@
+{% extends "../base/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<section class="row pt-2">
+  <div class="col-12 col-lg-12">
+      <h1 class="h1 text-center mx-auto mt-4"><strong>{{ application.title }}</strong></h1>
+      <p>{{ application.description }}</p>
+      <p class="mb-2">Клиент: {{ application.client.first_name }} {{ application.client.last_name }}</p>
+      <p class="mb-2">Ответственный сотрудник: {{ application.employee.first_name }} {{ application.employee.last_name }}</p>
+      <p class="mb-2">Категория: {{ application.category.title }}</p>
+      <p class="mb-2">Статус: {{ application.status.title }}</p>
+      {% load i18n %}{% language 'ru' %}
+      <p class="mb-2">Дата создания: {{ application.creation_date|date:'d E' }}</p>
+      {% endlanguage %}
+      {% if user == application.employee %}
+        <div class="my-4">
+          {% crispy change_status_form %}
+        </div>
+      {% endif %}
+
+      {% if user.is_administrator %}
+        <div class="my-2">
+            <a href="{% url 'application_edit' application.id %}" class="btn btn-outline-info">Изменить заявку</a>
+        </div>
+      {% endif %}
+      </div>
+</section>
+{% endblock content %}

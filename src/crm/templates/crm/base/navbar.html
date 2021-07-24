@@ -11,13 +11,16 @@
           </li>
           {% if user.is_administrator %}
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'home' %}">Все заявки</a>
+                <a class="nav-link" href="{% url 'all_applications' %}">Все заявки</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'home' %}">Создать клиента</a>
+                <a class="nav-link" href="{% url 'all_clients' %}">Все клиенты</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'home' %}">Создать заявку</a>
+                <a class="nav-link" href="{% url 'client_create' %}">Создать клиента</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'application_create' %}">Создать заявку</a>
               </li>
           {% endif %}
 

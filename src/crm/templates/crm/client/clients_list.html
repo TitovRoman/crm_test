@@ -1,0 +1,19 @@
+{% extends "../base/base.html" %}
+{% load ru_pluralize %}
+{% load crispy_forms_tags %}
+{% block content %}
+<section class="row pt-2">
+  <div class="col-12 col-lg-8">
+      <h1 class="h1 text-center mx-auto mt-4"><strong>Клиенты</strong></h1>
+      <p class="text-center pt-1">{{ clients|length|ru_pluralize:'клиент, клиента, клиентов' }}</p>
+      <div class="row mt-5">
+          {% load i18n %}
+            {% language 'ru' %}
+              {% for client in clients %}
+                {% include './client_card.html' %}
+              {% endfor %}
+            {% endlanguage %}
+      </div>
+  </div>
+</section>
+{% endblock content %}
