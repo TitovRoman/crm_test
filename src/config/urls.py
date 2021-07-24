@@ -18,9 +18,10 @@ from django.contrib.auth.views import LogoutView
 from django.urls import path
 
 from authentication.views import MyRegisterView, MyLoginView
-from crm.views import EmployeeApplicationsView, AllApplicationsView, \
-    ClientCreateView, ApplicationCreateView, ApplicationView, \
-    ApplicationEditView, ClientEditView, ClientsView
+from crm.views.application import EmployeeApplicationsView, \
+    AllApplicationsView, ApplicationCreateView, ApplicationView, \
+    ApplicationEditView
+from crm.views.client import ClientCreateView, ClientEditView, ClientsView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
