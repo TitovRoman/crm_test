@@ -94,16 +94,9 @@ class ClientForm(forms.ModelForm):
 class ClientCreateForm(ClientForm):
     button_message = 'Создать'
 
-    def __init__(self, *argc, **kwargs):
-        super().__init__(*argc, **kwargs)
-
 
 class ClientEditForm(ClientForm):
     button_message = 'Исправить'
-
-    def __init__(self, *argc, **kwargs):
-        super().__init__(*argc, **kwargs)
-
 
 
 class ApplicationForm(forms.ModelForm):
@@ -141,3 +134,10 @@ class ApplicationForm(forms.ModelForm):
             Submit('submit', 'Сохранить'),
         )
 
+
+class ApplicationCreateForm(ApplicationForm):
+    button_message = 'Создать'
+
+
+class ApplicationEditForm(ApplicationForm):
+    button_message = 'Исправить'

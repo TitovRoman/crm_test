@@ -1,3 +1,4 @@
+from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse
 from django.views.generic import ListView, CreateView, \
     DetailView, UpdateView
@@ -51,6 +52,16 @@ class EmployeeApplicationsView(BaseApplicationsView):
         return context
 
 
+class ApplicationBaseEditorView(SuccessMessageMixin):
+    model = models.Application
+    template_name = 'crm/application/application_create.html'
+    form_class = forms.ApplicationForm
+    redirect_url = 'application_create'
+
+    def get_success_url(self):
+        return reverse('application', kwargs={'pk': self.object.id})
+
+
 class ApplicationView(DetailView):
     model = models.Application
     context_object_name = 'application'
@@ -64,27 +75,21 @@ class ApplicationView(DetailView):
         return context
 
 
-class ApplicationCreateView(CreateView):
-    model = models.Application
-    template_name = 'crm/application/application_create.html'
-    form_class = forms.ApplicationForm
-    redirect_url = 'application_create'
+class ApplicationCreateView(ApplicationBaseEditorView, CreateView):
+    success_message = "Заявка создана"
+    form_class = forms.ApplicationCreateForm
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
 
-        context['title'] = 'Создание заявки'
+        context['title'] = 'Новая заявка'
 
         return context
 
-    def get_success_url(self):
-        return reverse('application', kwargs={'pk': self.object.id})
 
-
-class ApplicationEditView(UpdateView):
-    model = models.Application
-    template_name = 'crm/application/application_create.html'
-    form_class = forms.ApplicationForm
+class ApplicationEditView(ApplicationBaseEditorView, UpdateView):
+    success_message = "Заявка изменена"
+    form_class = forms.ApplicationEditForm
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
