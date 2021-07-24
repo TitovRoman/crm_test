@@ -1,10 +1,13 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse
 from django.views.generic import ListView, CreateView, \
-    DetailView, UpdateView
+    DetailView, UpdateView, TemplateView
 
 from crm import forms
 from crm import models
+from crm.mixins import AdministratorMixin, \
+    AdministratorOrModelEmployeeMixin
 
 
 class BaseApplicationsView(ListView):
@@ -25,7 +28,9 @@ class BaseApplicationsView(ListView):
         return context
 
 
-class AllApplicationsView(BaseApplicationsView):
+class AllApplicationsView(AdministratorMixin, BaseApplicationsView):
+    redirect_url = 'home'
+
     def get_queryset(self):
         return self.model.objects.all()
 
@@ -37,7 +42,7 @@ class AllApplicationsView(BaseApplicationsView):
         return context
 
 
-class EmployeeApplicationsView(BaseApplicationsView):
+class EmployeeApplicationsView(LoginRequiredMixin, BaseApplicationsView):
     def get_queryset(self):
         return (
             self.model.objects
@@ -56,16 +61,17 @@ class ApplicationBaseEditorView(SuccessMessageMixin):
     model = models.Application
     template_name = 'crm/application/application_create.html'
     form_class = forms.ApplicationForm
-    redirect_url = 'application_create'
+    redirect_url = 'home'
 
     def get_success_url(self):
         return reverse('application', kwargs={'pk': self.object.id})
 
 
-class ApplicationView(DetailView):
+class ApplicationView(AdministratorOrModelEmployeeMixin, DetailView):
     model = models.Application
     context_object_name = 'application'
     template_name = 'crm/application/application.html'
+    redirect_url = 'home'
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -75,7 +81,11 @@ class ApplicationView(DetailView):
         return context
 
 
-class ApplicationCreateView(ApplicationBaseEditorView, CreateView):
+class ApplicationCreateView(
+    AdministratorMixin,
+    ApplicationBaseEditorView,
+    CreateView,
+):
     success_message = "Заявка создана"
     form_class = forms.ApplicationCreateForm
 
@@ -87,7 +97,11 @@ class ApplicationCreateView(ApplicationBaseEditorView, CreateView):
         return context
 
 
-class ApplicationEditView(ApplicationBaseEditorView, UpdateView):
+class ApplicationEditView(
+    AdministratorOrModelEmployeeMixin,
+    ApplicationBaseEditorView,
+    UpdateView,
+):
     success_message = "Заявка изменена"
     form_class = forms.ApplicationEditForm
 

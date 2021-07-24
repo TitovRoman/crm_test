@@ -5,19 +5,20 @@ from django.views.generic import ListView, CreateView, \
 
 from crm import forms
 from crm import models
+from crm.mixins import AdministratorMixin
 
 
 class ClientBaseEditorView(SuccessMessageMixin):
     model = models.Client
     template_name = 'crm/client/client_create.html'
     form_class = forms.ClientForm
-    redirect_url = 'application_create'
+    redirect_url = 'home'
 
     def get_success_url(self):
         return reverse('client_edit', kwargs={'pk': self.object.id})
 
 
-class ClientCreateView(ClientBaseEditorView, CreateView):
+class ClientCreateView(AdministratorMixin, ClientBaseEditorView, CreateView):
     success_message = "Клиент создан"
     form_class = forms.ClientCreateForm
 
@@ -29,7 +30,7 @@ class ClientCreateView(ClientBaseEditorView, CreateView):
         return context
 
 
-class ClientEditView(ClientBaseEditorView, UpdateView):
+class ClientEditView(AdministratorMixin, ClientBaseEditorView, UpdateView):
     success_message = "Информация о клиенте обнавлена"
     form_class = forms.ClientEditForm
 
@@ -41,7 +42,8 @@ class ClientEditView(ClientBaseEditorView, UpdateView):
         return context
 
 
-class ClientsView(ListView):
+class ClientsView(AdministratorMixin, ListView):
     model = models.Client
     context_object_name = 'clients'
     template_name = 'crm/client/clients_list.html'
+    redirect_url = 'home'
