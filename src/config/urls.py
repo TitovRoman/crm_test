@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.views import LogoutView
 from django.urls import path
 
-from authentication.views import MyRegisterView, MyLoginView
+from authentication.views import MyLoginView
 from crm.views.application import EmployeeApplicationsView, \
     AllApplicationsView, ApplicationCreateView, ApplicationView, \
     ApplicationEditView
@@ -12,7 +12,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('login/', MyLoginView.as_view(), name='login'),
-    path('register/', MyRegisterView.as_view(), name='register'),
     path('logout/', LogoutView.as_view(), name='logout'),
 
     path('', EmployeeApplicationsView.as_view(), name='home'),
