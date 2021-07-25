@@ -58,6 +58,25 @@ class Client(models.Model):
         return f"Клиент {self.first_name} {self.last_name}"
 
 
+class ApplicationWithSelectRelated(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().select_related(
+            'client',
+            'status',
+            'category',
+            'employee',
+        )
+
+
+class ApplicationQuerySet(models.QuerySet):
+    def all_select_related(self):
+        return self.select_related(
+            'client',
+            'status',
+            'category',
+            'employee',
+        )
+
 class Application(models.Model):
     title = models.CharField('Заголовок', max_length=128)
     category = models.ForeignKey(
@@ -94,3 +113,5 @@ class Application(models.Model):
 
     def __str__(self):
         return f"Заявка №{self.pk} ({self.title})"
+
+    objects = ApplicationQuerySet.as_manager()

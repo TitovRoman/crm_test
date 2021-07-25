@@ -41,7 +41,7 @@ class BaseApplicationsView(ListView):
         queryset = super().get_queryset()
 
         search_query = self.search_handler.get_query()
-        return queryset.filter(search_query)
+        return queryset.filter(search_query).all_select_related()
 
 
 class AllApplicationsView(AdministratorMixin, BaseApplicationsView):
