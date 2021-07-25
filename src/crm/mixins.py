@@ -1,5 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, \
-    AccessMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, AccessMixin
 from django.shortcuts import redirect
 
 

@@ -1,11 +1,10 @@
 import datetime
+import operator
 from abc import ABC, abstractmethod
 from enum import Enum
-import operator
-from typing import Optional, Any
+from typing import Any
 
 from django.db.models import Q
-from django.http import QueryDict
 
 
 class SearchNode(ABC):
@@ -22,7 +21,6 @@ class EmptyNode(SearchNode):
 class SearchOperator(Enum):
     gte = 'gte'
     lte = 'lte'
-
     in_ = 'in'
 
 
@@ -119,7 +117,7 @@ class SearchInApplicationsParser:
     def __init__(self, search_parameters: dict):
         self.search_parameters = search_parameters
 
-    def _parse_search_parameters(self) -> SearchNode:
+    def parse_search_parameters(self) -> SearchNode:
         date_node = self._parse_date()
         category_node = self._parse_category()
         status_node = self._parse_status()
@@ -179,8 +177,8 @@ class SearchInApplicationsParser:
 class SearchInApplicationsHandler:
     def __init__(self, search_parameters: dict):
         self.base_search_node: SearchNode = \
-            SearchInApplicationsParser(search_parameters)\
-                ._parse_search_parameters()
+            SearchInApplicationsParser(search_parameters).\
+                parse_search_parameters()
 
     def get_query(self) -> Q:
         return self.base_search_node.get_query()

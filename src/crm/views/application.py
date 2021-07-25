@@ -1,12 +1,11 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.db.models import Q
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import View
 from django.views.generic import ListView, CreateView, \
-    DetailView, UpdateView, TemplateView
+    UpdateView
 
 from crm import forms
 from crm import models
