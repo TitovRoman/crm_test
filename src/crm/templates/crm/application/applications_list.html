@@ -3,10 +3,10 @@
 {% load crispy_forms_tags %}
 {% block content %}
 <section class="row pt-2">
-<div class="col-4 mt-4">
-    {% crispy search_form %}
+<div class="col-12 col-xl-4 mt-4">
+        {% crispy search_form %}
 </div>
-  <div class="col-12 col-lg-8">
+  <div class="col-12 col-xl-8">
       <h1 class="h1 text-center mx-auto mt-4"><strong>{{ applications_title }}</strong></h1>
       <p class="text-center pt-1">{{ applications|length|ru_pluralize:'заявка, заявки, заявок' }}</p>
       <div class="row mt-5">

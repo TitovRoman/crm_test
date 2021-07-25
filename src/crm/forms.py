@@ -22,12 +22,14 @@ class SearchForm(forms.Form):
     date_from = forms.DateField(
         label='С указанной даты (включительно)',
         input_formats=['%d/%m/%Y'],
-        required=False
+        required=False,
+        error_messages={'invalid': 'Неверная дата. Формат ввода: dd/mm/yyyy'},
     )
     date_to = forms.DateField(
         label='До указанной даты (включительно)',
         input_formats=['%d/%m/%Y'],
         required=False,
+        error_messages={'invalid': 'Неверная дата. Формат ввода: dd/mm/yyyy'},
     )
     application_category = forms.ModelMultipleChoiceField(
         queryset=models.Category.objects.all(),
@@ -47,13 +49,20 @@ class SearchForm(forms.Form):
         self.helper.add_input(Submit('submit', 'Submit'))
 
         self.helper.layout = Layout(
-            Fieldset(
-                'За период',
-                'date_from',
-                'date_to',
+            Row(
+                Fieldset(
+                    'За период',
+                    Row(
+                        Column('date_from', css_class='col-xl-12 col-md-6 col-12'),
+                        Column('date_to', css_class='col-xl-12 col-md-6 col-12'),
+                    ),
+                    css_class='col-12'
+                ),
             ),
-            'application_category',
-            'application_status',
+            Row(
+                Column('application_category', css_class='col-xl-12 col-md-6 col-12'),
+                Column('application_status', css_class='col-xl-12 col-md-6 col-12'),
+            ),
         )
 
 
