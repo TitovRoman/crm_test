@@ -5,7 +5,8 @@ from django.shortcuts import redirect
 class MyPassesTestMixin(AccessMixin):
     def test_func(self, request, *args, **kwargs):
         raise NotImplementedError(
-            '{0} is missing the implementation of the test_func() method.'.format(self.__class__.__name__)
+            '{0} is missing the implementation of the test_func() method.'
+            .format(self.__class__.__name__)
         )
 
     def dispatch(self, request, *args, **kwargs):
@@ -43,6 +44,6 @@ class AdministratorOrEmployeeMixin(LoginRequiredMixin, MyPassesTestMixin):
 
 class AdministratorOrModelEmployeeMixin(
     LoginRequiredMixin,
-    _CheckModelEmployeeOrAdministratorMixin
+    _CheckModelEmployeeOrAdministratorMixin,
 ):
     pass

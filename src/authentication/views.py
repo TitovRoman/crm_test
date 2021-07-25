@@ -1,8 +1,6 @@
-from django.conf import settings
 from django.contrib.auth.views import LoginView
-from django.views.generic import CreateView
 
-from .forms import MyUserCreationForm, MyAuthenticationForm
+from .forms import MyAuthenticationForm
 
 
 class MyLoginView(LoginView):

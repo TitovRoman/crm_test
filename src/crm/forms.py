@@ -56,7 +56,7 @@ class SearchForm(forms.Form):
                         Column('date_from', css_class='col-xl-12 col-md-6 col-12'),
                         Column('date_to', css_class='col-xl-12 col-md-6 col-12'),
                     ),
-                    css_class='col-12'
+                    css_class='col-12',
                 ),
             ),
             Row(

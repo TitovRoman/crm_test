@@ -25,7 +25,7 @@ class BaseApplicationsView(ListView):
         self.search_form.is_valid()
 
         self.search_handler = SearchInApplicationsHandler(
-            self.search_form.cleaned_data
+            self.search_form.cleaned_data,
         )
 
         return super().dispatch(request, *args, **kwargs)
@@ -45,7 +45,7 @@ class BaseApplicationsView(ListView):
 
 
 class AllApplicationsView(AdministratorMixin, BaseApplicationsView):
-     def get_context_data(self, *args, **kwargs):
+    def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
 
         context['applications_title'] = 'Все заявки'
@@ -85,12 +85,12 @@ class ApplicationView(AdministratorOrModelEmployeeMixin, View):
     def get(self, request, *args, **kwargs):
         application = get_object_or_404(self.model, id=kwargs['pk'])
         context = {
-            'application': application
+            'application': application,
         }
 
         if 'new_status' not in request.GET:
             status_form = forms.ChangeStatusForm({
-                'new_status': application.status.id
+                'new_status': application.status.id,
             })
         else:
             status_form = forms.ChangeStatusForm(request.GET)

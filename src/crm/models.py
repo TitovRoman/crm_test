@@ -44,7 +44,7 @@ class Client(models.Model):
         'Номер телефона',
         validators=[phone_regex],
         max_length=17,
-        blank=True
+        blank=True,
     )
     email = models.EmailField('Электронная почта')
     tg_username = models.CharField('Ник в telegram', max_length=128, blank=True)
@@ -77,6 +77,7 @@ class ApplicationQuerySet(models.QuerySet):
             'employee',
         )
 
+
 class Application(models.Model):
     title = models.CharField('Заголовок', max_length=128)
     category = models.ForeignKey(
@@ -98,7 +99,7 @@ class Application(models.Model):
         on_delete=models.SET_NULL,
     )
     description = models.TextField(
-        'Описание'
+        'Описание',
     )
     status = models.ForeignKey(
         Status,

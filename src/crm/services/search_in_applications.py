@@ -32,7 +32,7 @@ class SearchOperatorNode(SearchNode):
     def get_query(self) -> Q:
         query_params = {
             self._get_search_field_name() + '__' + self.search_operator.value:
-                self._get_search_value()
+                self._get_search_value(),
         }
         return Q(**query_params)
 
@@ -100,7 +100,7 @@ class LogicalOperationNode(SearchNode):
             self,
             operation: LogicalOperator,
             left: SearchNode,
-            right: SearchNode
+            right: SearchNode,
     ):
         self._operation = operation
         self._left: SearchNode = left
@@ -109,7 +109,7 @@ class LogicalOperationNode(SearchNode):
     def get_query(self) -> Q:
         return self._operation.value(
             self._left.get_query(),
-            self._right.get_query()
+            self._right.get_query(),
         )
 
 
@@ -125,7 +125,7 @@ class SearchInApplicationsParser:
         search_node = self._intersection_nodes(
             date_node,
             category_node,
-            status_node
+            status_node,
         )
 
         return search_node
@@ -143,7 +143,7 @@ class SearchInApplicationsParser:
                     result_node = LogicalOperationNode(
                         LogicalOperator.AND,
                         result_node,
-                        node
+                        node,
                     )
         return result_node
 
@@ -157,7 +157,7 @@ class SearchInApplicationsParser:
         if date_to:
             date_node = self._intersection_nodes(
                 date_node,
-                DateLteNode(date_to)
+                DateLteNode(date_to),
             )
         return date_node
 
@@ -178,7 +178,7 @@ class SearchInApplicationsHandler:
     def __init__(self, search_parameters: dict):
         self.base_search_node: SearchNode = \
             SearchInApplicationsParser(search_parameters).\
-                parse_search_parameters()
+            parse_search_parameters()
 
     def get_query(self) -> Q:
         return self.base_search_node.get_query()

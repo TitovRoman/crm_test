@@ -23,12 +23,12 @@ urlpatterns = [
     path(
         'applications/<int:pk>/',
         ApplicationView.as_view(),
-        name='application'
+        name='application',
     ),
     path(
         'applications/edit/<int:pk>/',
         ApplicationEditView.as_view(),
-        name='application_edit'
+        name='application_edit',
     ),
     path(
         'applications/create/',

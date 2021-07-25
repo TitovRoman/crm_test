@@ -29,10 +29,22 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Client',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(
+                    auto_created=True,
+                    primary_key=True,
+                    serialize=False,
+                    verbose_name='ID',
+                )),
                 ('first_name', models.CharField(max_length=128)),
                 ('last_name', models.CharField(blank=True, max_length=128)),
-                ('phone_number', models.CharField(blank=True, max_length=17, validators=[django.core.validators.RegexValidator(message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.", regex='^\\+?1?\\d{9,15}$')])),
+                ('phone_number', models.CharField(
+                    blank=True,
+                    max_length=17,
+                    validators=[django.core.validators.RegexValidator(
+                        message="Phone number must be entered in the format:"
+                                " '+999999999'. Up to 15 digits allowed.",
+                        regex='^\\+?1?\\d{9,15}$')],
+                )),
                 ('email', models.EmailField(max_length=254)),
                 ('tg_username', models.CharField(blank=True, max_length=128)),
                 ('registration_data', models.DateTimeField(auto_now_add=True)),
@@ -56,14 +68,34 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Application',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(
+                    auto_created=True,
+                    primary_key=True,
+                    serialize=False,
+                    verbose_name='ID',
+                )),
                 ('title', models.CharField(max_length=128)),
                 ('description', models.TextField()),
                 ('creation_date', models.DateTimeField(auto_now_add=True)),
-                ('category', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='crm.Category')),
-                ('client', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='crm.Client')),
-                ('employee', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL)),
-                ('status', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='crm.Status')),
+                ('category', models.ForeignKey(
+                    null=True,
+                    on_delete=django.db.models.deletion.SET_NULL,
+                    to='crm.Category',
+                )),
+                ('client', models.ForeignKey(
+                    null=True,
+                    on_delete=django.db.models.deletion.SET_NULL,
+                    to='crm.Client',
+                )),
+                ('employee', models.ForeignKey(
+                    null=True,
+                    on_delete=django.db.models.deletion.SET_NULL,
+                    to=settings.AUTH_USER_MODEL,
+                )),
+                ('status', models.ForeignKey(
+                    on_delete=django.db.models.deletion.PROTECT,
+                    to='crm.Status',
+                )),
             ],
             options={
                 'verbose_name': 'Заявка',

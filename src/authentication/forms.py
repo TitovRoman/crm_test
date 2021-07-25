@@ -1,8 +1,8 @@
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout
-from django.conf import settings
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.urls import reverse
+
 from . import models
 
 
@@ -44,6 +44,6 @@ class MyUserCreationForm(UserCreationForm):
             Submit(
                 'submit',
                 'Зарегистрироваться',
-                css_class='btn btn-primary btn-lg btn-block'
-                )
+                css_class='btn btn-primary btn-lg btn-block',
+            ),
         )
