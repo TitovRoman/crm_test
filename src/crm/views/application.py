@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.db.models import Q
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import View
@@ -11,16 +12,23 @@ from crm import forms
 from crm import models
 from crm.mixins import AdministratorMixin, \
     AdministratorOrModelEmployeeMixin
+from crm.services.search_in_applications import SearchInApplicationsHandler
 
 
 class BaseApplicationsView(ListView):
     model = models.Application
     context_object_name = 'applications'
     template_name = 'crm/application/applications_list.html'
+    redirect_url = 'home'
 
     def dispatch(self, request, *args, **kwargs):
         self.search_form = forms.SearchForm(request.GET)
         self.search_form.is_valid()
+
+        self.search_handler = SearchInApplicationsHandler(
+            self.search_form.cleaned_data
+        )
+
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, *args, **kwargs):
@@ -30,14 +38,15 @@ class BaseApplicationsView(ListView):
 
         return context
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        search_query = self.search_handler.get_query()
+        return queryset.filter(search_query)
+
 
 class AllApplicationsView(AdministratorMixin, BaseApplicationsView):
-    redirect_url = 'home'
-
-    def get_queryset(self):
-        return self.model.objects.all()
-
-    def get_context_data(self, *args, **kwargs):
+     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
 
         context['applications_title'] = 'Все заявки'
@@ -47,10 +56,8 @@ class AllApplicationsView(AdministratorMixin, BaseApplicationsView):
 
 class EmployeeApplicationsView(LoginRequiredMixin, BaseApplicationsView):
     def get_queryset(self):
-        return (
-            self.model.objects
-            .filter(employee=self.request.user)
-        )
+        queryset = super().get_queryset()
+        return queryset.filter(employee=self.request.user)
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
