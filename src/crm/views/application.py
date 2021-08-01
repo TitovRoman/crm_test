@@ -20,6 +20,8 @@ class BaseApplicationsView(ListView):
     template_name = 'crm/application/applications_list.html'
     redirect_url = 'home'
 
+    paginate_by = 2
+
     def dispatch(self, request, *args, **kwargs):
         self.search_form = forms.SearchForm(request.GET)
         self.search_form.is_valid()

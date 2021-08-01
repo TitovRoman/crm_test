@@ -25,7 +25,7 @@ SECRET_KEY = '*$(3jm9q-117uw59z+0iy-9@g5+$1r6lc#5a%@7l2a69d%=lv+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['crm.com']
 
 
 # Application definition
