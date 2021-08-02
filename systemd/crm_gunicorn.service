@@ -3,9 +3,9 @@ Description=gunicorn daemon crm
 After=network.target
 
 [Service]
-User=www-data
-WorkingDirectory=/home/roman/study/test/sber/crm/src
-ExecStart=/home/roman/study/test/sber/crm/env/bin/gunicorn --workers 3 --bind unix:/home/roman/study/test/sber/crm/gunicorn/gunicorn.sock config.wsgi:application --access-logfile /home/roman/study/test/sber/crm/gunicorn/access.log --error-logfile /home/roman/study/test/sber/crm/gunicorn/error.log
+User=www
+WorkingDirectory=/home/www/crm/src
+ExecStart=/home/www/crm/env/bin/gunicorn --workers 3 --bind unix:/home/www/crm/gunicorn/gunicorn.sock config.wsgi:application --access-logfile /home/www/crm/gunicorn/access.log --error-logfile /home/www/crm/gunicorn/error.log
 Restart=on-failure
 
 [Install]
