@@ -1,24 +1,10 @@
-Это чистый шаблон Django проекта, с которым можно быстро начать разработку. В шаблон входит конфиг Systemd, nginx, gunicorn.
+Посмотреть на работу сайта можно по ссылке: https://my-crm-test.herokuapp.com/
 
-Установка представляет собой просто указание Python интерпретатора и названия домена, запустите:
+Пользователи для тестирования:
 
-```bash
-./install.sh
-```
+1. login: admin  password: admin
+2. login: user2  password: 1234
 
-В конфиге Django заполните настройки базы данных (`src/config/settings.py`).
+Для авторизации используется расширенная модель пользователя с полями is_administrator (дает право просмотра и редактирования всех заявок и клиентов) и is_employee (дает право просмотра собственных заявок и изменения статуса их выполнения). Данные поля может устанавливать Django администратор в админке.
 
-Посмотреть статус gunicorn демона:
-
-```bash
-sudo systemctl status gunicorn
-```
-
-Логи gunicorn'а лежат в `gunicorn/access.log` и `gunicorn/error.log`.
-
-После изменения systemd конфига надо перечитать его и затем перезапустить юнит:
-
-```bash
-sudo systemctl daemon-reload
-sudo systemctl restart gunicorn
-```
+Логика поиска реализована в crm/services/search_in_applications.py  
